@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        img{
+            width: 300px;
+        }
+        .ct { grid-area: ct; }
+        .card { grid-area: card; }
+        
+        .grid-container {
+          display: grid;
+          grid-template-areas:
+            'card'
+            'ct';
+          gap: 10px;
+          background-color: #2196F3;
+          padding: 10px;
+        }
+
+        .grid-container > div {
+          background-color: rgba(255, 255, 255, 0.8);
+          text-align: center;
+          padding: 20px 0;
+          font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="ct">
+            <div class="container">
+                <span id="ctht" class="ctht">0</span>
+            </div>
+        </div>
+        <div class="card">
+            <div id="gametable"></div>
+        </div>
+    </div>
+    <script>
+        card = ["front card.jpg", "front card.jpg", "second front.jpg","second front.jpg",]
+        let NTurnCard = 0;
+        let FristCard = null
+        table = document.querySelector('#gametable')
+        let ctht = document.getElementById("ctht");
+        let ct = 0;
+        card.forEach(element => {
+            table.innerHTML += '<img id="' + element + '" src="pokemon-card-back-1.png" onclick="gira(this)" />'
+            console.log('<img id="' + element + '"pokemon-card-back-1.png" />')
+        });
+        function gira(card) {
+            NTurnCard++
+            console.log(NTurnCard)
+            card.src = card.id
+            if (NTurnCard == 1)
+            FristCard = card
+            else {
+                NTurnCard = 0
+                if (card.src == FristCard.src) {
+                    console.log("+1 Point") 
+                    ct++;
+                    ctht.textContent = ct;
+                } else {
+                    console.log("retry")
+                    setTimeout(function() {
+                        card.src = "pokemon-card-back-1.png";
+                        FristCard.src = "pokemon-card-back-1.png";
+                    }, 1500);
+                }
+            }
+            ctht.textContent = ct;
+        }
+    </script>
+</body>
+</html>
